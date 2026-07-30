@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Slots.Rng</name>
+    </assembly>
+    <members>
+        <member name="T:Slots.Rng.IRng">
+            <summary>
+            Randomness source. In a game engine the RNG is always injected and seeded —
+            never global (<c>Math.random()</c>, <c>Random.Shared</c>, etc.).
+            </summary>
+        </member>
+        <member name="M:Slots.Rng.IRng.NextUInt">
+            <summary>Next 32 raw bits from the generator.</summary>
+        </member>
+        <member name="M:Slots.Rng.IRng.Next(System.UInt32)">
+            <summary>
+            Uniform integer greater than or equal to 0 and less than <paramref name="maxExclusive"/> —
+            that is, from 0 to <c>maxExclusive − 1</c>. The value of <paramref name="maxExclusive"/>
+            is never drawn.
+            </summary>
+        </member>
+        <member name="T:Slots.Rng.Pcg32">
+            <summary>
+            PCG-XSH-RR 32-bit (O'Neill). Deterministic and reproducible on any machine,
+            unlike <c>System.Random</c>, whose algorithm may vary across runtime versions.
+            </summary>
+        </member>
+    </members>
+</doc>

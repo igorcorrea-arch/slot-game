@@ -1,0 +1,20 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Reference Include="Slots.Contracts">
+      <HintPath>..\..\libs\Slots.Contracts.dll</HintPath>
+    </Reference>
+    <ProjectReference Include="..\Slots.Engine\Slots.Engine.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="..\..\reels-base.csv" Link="data\reels-base.csv" CopyToOutputDirectory="PreserveNewest" />
+    <Content Include="..\..\paytable.csv" Link="data\paytable.csv" CopyToOutputDirectory="PreserveNewest" />
+    <Content Include="..\..\prizes.csv" Link="data\prizes.csv" CopyToOutputDirectory="PreserveNewest" />
+  </ItemGroup>
+
+</Project>

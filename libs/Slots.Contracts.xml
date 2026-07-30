@@ -1,0 +1,98 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Slots.Contracts</name>
+    </assembly>
+    <members>
+        <member name="T:Slots.Contracts.FeatureResult">
+            <summary>
+            Result of a bonus stage, described neutrally for the simulator to display:
+            <paramref name="Steps"/> is the step-by-step sequence in the order it happened. When the bonus
+            has a grid, the final state is the <see cref="P:Slots.Contracts.FeatureStep.Window"/> of the last step
+            that provides one. <paramref name="AmountCents"/> is the total paid by the stage.
+            </summary>
+        </member>
+        <member name="M:Slots.Contracts.FeatureResult.#ctor(System.String,System.Collections.Generic.IReadOnlyList{Slots.Contracts.FeatureStep},System.Int64)">
+            <summary>
+            Result of a bonus stage, described neutrally for the simulator to display:
+            <paramref name="Steps"/> is the step-by-step sequence in the order it happened. When the bonus
+            has a grid, the final state is the <see cref="P:Slots.Contracts.FeatureStep.Window"/> of the last step
+            that provides one. <paramref name="AmountCents"/> is the total paid by the stage.
+            </summary>
+        </member>
+        <member name="T:Slots.Contracts.FeatureStep">
+            <summary>
+            One step of a bonus stage: a description of what happened and, optionally, the
+            grid state after it (same <c>[reel][row]</c> convention as
+            <see cref="T:Slots.Contracts.SpinResult"/>). The description content belongs to the game; the simulator only displays it.
+            </summary>
+        </member>
+        <member name="M:Slots.Contracts.FeatureStep.#ctor(System.String,System.Collections.Generic.IReadOnlyList{System.Collections.Generic.IReadOnlyList{System.String}})">
+            <summary>
+            One step of a bonus stage: a description of what happened and, optionally, the
+            grid state after it (same <c>[reel][row]</c> convention as
+            <see cref="T:Slots.Contracts.SpinResult"/>). The description content belongs to the game; the simulator only displays it.
+            </summary>
+        </member>
+        <member name="T:Slots.Contracts.ISlotEngine">
+            <summary>
+            Contract a slot engine must implement to work with the simulator.
+            The contract does not know the game rules: what pays, when a bonus triggers,
+            and how the bet is validated are engine decisions.
+            Every monetary value is an integer in cents.
+            </summary>
+        </member>
+        <member name="M:Slots.Contracts.ISlotEngine.Spin(System.Int64)">
+            <summary>
+            Runs a full spin: draws the outcome, evaluates wins, and runs
+            any bonus stages that trigger. An invalid bet for the game rules
+            must throw <see cref="T:System.ArgumentException"/>.
+            </summary>
+        </member>
+        <member name="M:Slots.Contracts.ISlotEngine.SpinWithStops(System.Collections.Generic.IReadOnlyList{System.Int32},System.Int64)">
+            <summary>
+            Evaluates a spin with forced reel stops — the basis for reproducible acceptance
+            cases. Must not consume RNG; stages that depend on draws
+            (bonus, features) are not executed and <see cref="P:Slots.Contracts.SpinResult.Feature"/> is null.
+            </summary>
+        </member>
+        <member name="T:Slots.Contracts.ISlotEngineFactory">
+            <summary>
+            Simulator entry point: creates an engine from a seed.
+            Same seed → same sequence of results, always.
+            </summary>
+        </member>
+        <member name="T:Slots.Contracts.SpinResult">
+            <summary>
+            Result of a spin.
+            <paramref name="Window"/> is indexed as <c>Window[reel][row]</c>, with whatever
+            dimensions the game has. <paramref name="Feature"/> is null when no
+            bonus ran. <paramref name="TotalWinCents"/> is the sum of everything the
+            spin paid, including the feature.
+            </summary>
+        </member>
+        <member name="M:Slots.Contracts.SpinResult.#ctor(System.Collections.Generic.IReadOnlyList{System.Int32},System.Collections.Generic.IReadOnlyList{System.Collections.Generic.IReadOnlyList{System.String}},System.Collections.Generic.IReadOnlyList{Slots.Contracts.WinResult},Slots.Contracts.FeatureResult,System.Int64)">
+            <summary>
+            Result of a spin.
+            <paramref name="Window"/> is indexed as <c>Window[reel][row]</c>, with whatever
+            dimensions the game has. <paramref name="Feature"/> is null when no
+            bonus ran. <paramref name="TotalWinCents"/> is the sum of everything the
+            spin paid, including the feature.
+            </summary>
+        </member>
+        <member name="T:Slots.Contracts.WinResult">
+            <summary>
+            A win from the spin, ready for display: <paramref name="Name"/> identifies the
+            source (a symbol, "scatter"…), <paramref name="Detail"/> describes how the amount
+            was formed (e.g.: "4 reels · 2 ways · table 13").
+            </summary>
+        </member>
+        <member name="M:Slots.Contracts.WinResult.#ctor(System.String,System.String,System.Int64)">
+            <summary>
+            A win from the spin, ready for display: <paramref name="Name"/> identifies the
+            source (a symbol, "scatter"…), <paramref name="Detail"/> describes how the amount
+            was formed (e.g.: "4 reels · 2 ways · table 13").
+            </summary>
+        </member>
+    </members>
+</doc>

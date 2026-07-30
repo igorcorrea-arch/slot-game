@@ -1,0 +1,11 @@
+kind,value_tenths,weight
+cash,3,21
+cash,6,18
+cash,9,14
+cash,15,12
+cash,30,11
+cash,60,10
+cash,150,5
+cash,300,1
+mult,2,6
+mult,3,2

@@ -1,0 +1,6 @@
+<Solution>
+  <Folder Name="/src/">
+    <Project Path="src/Slots.Engine/Slots.Engine.csproj" />
+    <Project Path="src/Slots.Simulator/Slots.Simulator.csproj" />
+  </Folder>
+</Solution>

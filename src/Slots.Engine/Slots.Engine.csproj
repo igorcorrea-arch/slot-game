@@ -1,0 +1,12 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <ItemGroup>
+    <Reference Include="Slots.Contracts">
+      <HintPath>..\..\libs\Slots.Contracts.dll</HintPath>
+    </Reference>
+    <Reference Include="Slots.Rng">
+      <HintPath>..\..\libs\Slots.Rng.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
+</Project>
