@@ -1,5 +1,6 @@
 using Slots.Contracts;
 using Slots.Rng;
+using System.Text.Json;
 
 namespace Slots.Engine;
 
@@ -11,8 +12,27 @@ public sealed class SlotEngineFactory : ISlotEngineFactory
 {
     public ISlotEngine Create(ulong seed)
     {
-        // Load your configuration here (CSVs are at <output>/data)
-        // and inject the RNG into the engine. Internal structure is entirely yours.
-        return new SlotEngine(new Pcg32(seed));
+        var configPath = Path.Combine(AppContext.BaseDirectory, "data", "game-config.json");
+        var configJson = File.ReadAllText(configPath);
+
+        var config = JsonSerializer.Deserialize<GameConfig>(configJson, new JsonSerializerOptions {
+                PropertyNameCaseInsensitive = true
+            }
+        ) ?? throw new InvalidOperationException(
+            "Invalid game configuration."
+        );
+        
+        var reelsPath = Path.Combine(AppContext.BaseDirectory, "data", "reels-base.csv");
+        var reels = ReelLoader.Load(reelsPath);
+        Console.WriteLine($"Reels loaded: {string.Join(", ", reels.Select(r => r.Count))}");
+        
+        var payTablePath = Path.Combine(AppContext.BaseDirectory, "data", "paytable.csv");
+        var payTable = PayTableLoader.Load(payTablePath);
+        Console.WriteLine($"PayTable loaded: {payTable.Count} symbols");
+        
+        var prizesPath = Path.Combine(AppContext.BaseDirectory, "data", "prizes.csv");
+        var prizes = PrizeLoader.Load(prizesPath);
+        
+        return new SlotEngine(new Pcg32(seed), reels, payTable, prizes, config);
     }
 }

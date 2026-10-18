@@ -1,0 +1,8 @@
+﻿{
+  "holdAndSpin": {
+    "initialLives": 3,
+    "coinChancePercent": 8,
+    "grandPrizeTenths": 5000
+  },
+  "scatterTriggerCount": 3
+}

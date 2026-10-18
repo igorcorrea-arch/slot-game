@@ -12,6 +12,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Content Include="..\..\game-config.json">
+      <Link>data\game-config.json</Link>
+    </Content>
     <Content Include="..\..\reels-base.csv" Link="data\reels-base.csv" CopyToOutputDirectory="PreserveNewest" />
     <Content Include="..\..\paytable.csv" Link="data\paytable.csv" CopyToOutputDirectory="PreserveNewest" />
     <Content Include="..\..\prizes.csv" Link="data\prizes.csv" CopyToOutputDirectory="PreserveNewest" />

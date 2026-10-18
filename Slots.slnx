@@ -1,6 +1,10 @@
 <Solution>
   <Folder Name="/src/">
+    <File Path="src/game-config.json" />
     <Project Path="src/Slots.Engine/Slots.Engine.csproj" />
     <Project Path="src/Slots.Simulator/Slots.Simulator.csproj" />
+  </Folder>
+  <Folder Name="/tests/">
+    <Project Path="tests/Slots.Engine.Tests/Slots.Engine.Tests.csproj" />
   </Folder>
 </Solution>

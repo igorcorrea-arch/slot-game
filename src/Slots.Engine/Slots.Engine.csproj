@@ -8,5 +8,10 @@
       <HintPath>..\..\libs\Slots.Rng.dll</HintPath>
     </Reference>
   </ItemGroup>
+  <ItemGroup>
+    <None Include="..\..\game-config.json"
+          Link="data\game-config.json"
+          CopyToOutputDirectory="PreserveNewest" />
+  </ItemGroup>
 
 </Project>

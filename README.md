@@ -1,62 +1,57 @@
-# Ino Games - Backend Assessment
+# Slot Math Engine
 
-> **🚫 DO NOT FORK THIS REPOSITORY**
-> 
-> This repository is provided for technical assessment purposes only.
-> 
-> **✅ Permitted:** Clone locally for evaluation only  
-> **❌ Prohibited:** Fork, copy, share, or distribute
+A deterministic slot game engine implemented in C# / .NET 10.
 
-# Technical challenge — Hold & Spin
+## Implementation
 
-The full brief is in **`challenge-slot-math.md`**. Read it first.
+The engine implements:
 
-## Requirements
+- A 5-reel, 3-row base game with configurable reel strips.
+- Ways evaluation with Wild substitution.
+- Scatter evaluation and Hold & Spin triggering.
+- Hold & Spin with locked coin positions, respins, multipliers, and Grand awards.
+- Deterministic random number generation using the provided PCG32 implementation.
+- External CSV data and JSON configuration.
 
-- .NET 10 SDK
+## Architecture
 
-## What's in here
+`SlotEngine` coordinates the base game and bonus feature.
 
-| Item | What it is |
-|---|---|
-| `challenge-slot-math.md` | The challenge brief |
-| `reels-base.csv`, `paytable.csv`, `prizes.csv` | Raw game data |
-| `src/Slots.Engine/` | **Your project.** Engine skeleton, already wired into the simulator — implement the contract here |
-| `src/Slots.Simulator/` | The simulator (you don't need to change it) |
-| `libs/Slots.Contracts.dll` | The contract your engine implements |
-| `libs/Slots.Rng.dll` | The challenge RNG (PCG32) — inject it into your engine |
-| `libs/README.md` | DLL reference: interfaces, types, and semantics (also in IntelliSense) |
+`WaysEvaluator` and `ScatterEvaluator` handle the base game payouts.
 
-## How to run
+`HoldAndSpinFeature` manages the bonus flow, using `HoldAndSpinState` for state transitions and `FeaturePayoutCalculatorFacade` for payout calculations.
+
+The engine is instantiated through `SlotEngineFactory`, which loads the game data and configuration.
+
+## Build
+
+Requires .NET 10 SDK.
 
 ```bash
-cd src/Slots.Simulator
-
-dotnet run cases                      # checks cases G01–G07 against your engine
-dotnet run sim 1000000 100 12345      # batch simulation: spins, bet (cents), seed
-dotnet run play 100                   # play spin by spin
+dotnet build src/Slots.Simulator/Slots.Simulator.csproj -c Release
 ```
 
-In `play` mode: **space** spins, `b` changes the bet, `q` quits.
+## Tests
 
-Before you implement anything, `dotnet run cases` fails with `NotImplementedException` — that's the
-starting point. The CSVs are copied to `<output>/data` automatically on build.
+```bash
+dotnet test tests/Slots.Engine.Tests/Slots.Engine.Tests.csproj
+```
 
-## Questions?
+Tests cover base game calculations, bonus state transitions, prize selection, payout calculations, and scripted Hold & Spin scenarios.
 
-Any question — brief, kit, environment — feel free to ask.
-Asking does not cost you points.
+## Configuration
 
----
+Game parameters are defined in `game-config.json`, including:
 
-## ⚖️ License
+- Initial Hold & Spin lives
+- Coin appearance probability
+- Grand prize value
+- Scatter trigger count
 
-This project is proprietary software owned by **Ino Games** and provided for technical assessment purposes only. 
+Reel strips, paytable, and prize weights are loaded from CSV files.
 
-**Important:** This code is restricted for evaluation use only. Commercial use, distribution, or sharing outside the assessment context is prohibited. See the [LICENSE](LICENSE) file for complete terms and conditions.
+## Determinism
 
-By accessing this repository, you acknowledge and agree to the licensing terms set forth by Ino Games.
+The engine uses the supplied seeded PCG32 RNG. For the same seed, configuration, and sequence of calls, it produces the same results.
 
----
-
-© 2026 Ino Games - All Rights Reserved
+`SpinWithStops()` evaluates supplied reel stops without consuming RNG or triggering the bonus feature.
