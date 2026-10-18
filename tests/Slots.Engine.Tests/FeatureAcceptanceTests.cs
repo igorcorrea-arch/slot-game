@@ -11,7 +11,6 @@ public class FeatureAcceptanceTests
         var state = new HoldAndSpinState(3);
         var board = new CoinPrize?[15];
 
-        // Respin 1: duas moedas cash
         board[0] = new CoinPrize("cash", 3, 21);
         board[1] = new CoinPrize("cash", 15, 12);
 
@@ -20,12 +19,10 @@ public class FeatureAcceptanceTests
         Assert.Equal(3, state.Lives);
         Assert.Equal(2, state.LockedCount);
 
-        // Respin 2: nenhuma moeda
         state.ApplyRespin(Array.Empty<int>());
 
         Assert.Equal(2, state.Lives);
 
-        // Respin 3: multiplicador x2
         board[2] = new CoinPrize("mult", 2, 6);
 
         state.ApplyRespin(new[] { 2 });
@@ -33,7 +30,6 @@ public class FeatureAcceptanceTests
         Assert.Equal(3, state.Lives);
         Assert.Equal(3, state.LockedCount);
 
-        // Respins 4, 5 e 6: nenhuma moeda
         state.ApplyRespin(Array.Empty<int>());
         state.ApplyRespin(Array.Empty<int>());
         state.ApplyRespin(Array.Empty<int>());
@@ -92,7 +88,6 @@ public class FeatureAcceptanceTests
     {
         var script = new List<ScriptedRespin>();
 
-        // Respin 1: cinco moedas cash 6
         script.Add(new ScriptedRespin(
             Enumerable.Range(0, 5)
                 .Select(i => new ScriptedCoin(
@@ -100,7 +95,6 @@ public class FeatureAcceptanceTests
                 .ToList()
         ));
 
-        // Respin 2: cinco moedas cash 9
         script.Add(new ScriptedRespin(
             Enumerable.Range(5, 5)
                 .Select(i => new ScriptedCoin(
@@ -108,7 +102,6 @@ public class FeatureAcceptanceTests
                 .ToList()
         ));
 
-        // Respin 3: quatro moedas cash 15 e um x2
         var lastCoins = Enumerable.Range(10, 4)
             .Select(i => new ScriptedCoin(
                 i, new CoinPrize("cash", 15, 1)))
@@ -131,7 +124,6 @@ public class FeatureAcceptanceTests
     {
         var script = new List<ScriptedRespin>();
 
-        // Respin 1: cinco moedas cash 300
         script.Add(new ScriptedRespin(
             Enumerable.Range(0, 5)
                 .Select(i => new ScriptedCoin(
@@ -139,7 +131,6 @@ public class FeatureAcceptanceTests
                 .ToList()
         ));
 
-        // Respin 2: cinco moedas cash 300
         script.Add(new ScriptedRespin(
             Enumerable.Range(5, 5)
                 .Select(i => new ScriptedCoin(
@@ -147,7 +138,6 @@ public class FeatureAcceptanceTests
                 .ToList()
         ));
 
-        // Respin 3: três cash 300 e dois x3
         var lastCoins = Enumerable.Range(10, 3)
             .Select(i => new ScriptedCoin(
                 i, new CoinPrize("cash", 300, 1)))

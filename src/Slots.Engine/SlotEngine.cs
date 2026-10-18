@@ -28,18 +28,14 @@ public sealed class SlotEngine(
                 (uint)reels[i].Count);
         }
 
-        // Calcula os pagamentos do Base Game.
         var baseResult = SpinWithStops(stops, betCents);
 
-        // Conta os Scatters na janela sorteada.
         int scatterCount = baseResult.Window.Sum(
             reel => reel.Count(symbol => symbol == "SC"));
 
-        // Sem bônus: devolvemos o resultado normal.
         if (scatterCount < config.ScatterTriggerCount)
             return baseResult;
 
-        // Com bônus: executamos o Hold & Spin.
         var feature = new HoldAndSpinFeature(_rng,
             prizes,
             config.HoldAndSpin.CoinChancePercent,

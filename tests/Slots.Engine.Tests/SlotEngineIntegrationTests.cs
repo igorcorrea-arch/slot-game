@@ -74,9 +74,6 @@ public class SlotEngineIntegrationTests
             new("cash", 3, 100)
         };
 
-        // 5 sorteios para os stops, todos na posição 0.
-        // Depois, 45 sorteios com resultado 99:
-        // nenhuma moeda cai durante os 3 respins.
         var values = new List<uint>();
 
         values.AddRange(Enumerable.Repeat(0u, 5));

@@ -14,7 +14,6 @@ public class FeaturePayoutCalculatorFacadeTests
 
         long result = FeaturePayoutCalculatorFacade.Calculate(board, 100, 5000);
 
-        // (3 + 15) × 2 × 3 × (100 / 10)
         Assert.Equal(1080, result);
     }
 
@@ -28,8 +27,6 @@ public class FeaturePayoutCalculatorFacadeTests
 
         long result = FeaturePayoutCalculatorFacade.Calculate(board, 100, 5000);
 
-        // 15 × 3 × 10 = 450
-        // Grand = 5000 × 10 = 50000
         Assert.Equal(50450, result);
     }
 

@@ -23,7 +23,6 @@ public class HoldAndSpinFeatureTests
         Assert.Equal(0, result.AmountCents);
         Assert.Equal(4, result.Steps.Count);
 
-        // 15 posições vazias × 3 respins
         Assert.Equal(45, rng.CallCount);
     }
 
